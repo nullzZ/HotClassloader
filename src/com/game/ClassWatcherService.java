@@ -49,8 +49,7 @@ public class ClassWatcherService implements Runnable {
 	public ClassWatcherService StartServers() {
 		try {
 			if (!IsRuner) {
-				WatchKey wk = Paths.get(path).register(watcher, ENTRY_MODIFY);
-				this.keys.put(wk, path);
+				this.addListener(path);
 				File file = new File(path);
 				LinkedList<File> fList = new LinkedList<File>();
 				fList.addLast(file);
@@ -63,8 +62,7 @@ public class ClassWatcherService implements Runnable {
 							fList.addLast(file2);
 							// 依次注册子目录
 							String s = file2.getAbsolutePath();
-							wk = Paths.get(s).register(watcher, ENTRY_MODIFY);
-							this.keys.put(wk, s);
+							this.addListener(s);
 						}
 					}
 				}
@@ -74,6 +72,11 @@ public class ClassWatcherService implements Runnable {
 			e.printStackTrace();
 		}
 		return this;
+	}
+
+	private void addListener(String path) throws IOException {
+		WatchKey wk = Paths.get(path).register(watcher, ENTRY_MODIFY);
+		this.keys.put(wk, path);
 	}
 
 	/**
@@ -92,7 +95,9 @@ public class ClassWatcherService implements Runnable {
 					@SuppressWarnings("unchecked")
 					WatchEvent<Path> e = (WatchEvent<Path>) event;
 					Path fileName = e.context();
-					logger.error(event.kind().name() + "发现目录下有Class发生变化.进行热加载" + path + "\\" + fileName);
+					
+					String keypath = this.keys.get(key);
+					logger.error(event.kind().name() + "发现目录下有Class发生变化.进行热加载" + keypath + "\\" + fileName);
 
 					// ----------------------编译-------------------------------
 					// boolean ret =
@@ -107,7 +112,7 @@ public class ClassWatcherService implements Runnable {
 					// MyClassLoader.GetInstance().findNewClass(path + "\\" +
 					// javaName + ".class");
 					// ----------------------编译-------------------------------
-					String keypath = this.keys.get(key);
+					
 					Object obj = MyClassLoader.GetInstance().findNewClass(keypath + "\\" + fileName);
 					ScriptManager.getInstance().putScript((IScript) obj);
 				}

@@ -14,7 +14,7 @@ public class RefSay implements ISayScript {
 
 	@Override
 	public void say() {
-		System.out.println("RefSay!@@@好使了？");
+		System.out.println("RefSay!@@@好使了？2");
 	}
 
 }

@@ -19,7 +19,7 @@ public class RefSayTow implements ISayScript {
 	}
 
 	public String a() {
-		return "测试";
+		return "测试3";
 	}
 
 }
