@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<scripts>
+	<script>
+		<id>1</id>
+		<class>script.RefSayTow</class>
+	</script>
+	<script>
+		<id>2</id>
+		<class>script.a.RefSay</class>
+	</script>
+</scripts>
