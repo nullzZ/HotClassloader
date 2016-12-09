@@ -44,10 +44,13 @@ public class ScriptManager {
 	 * 
 	 * @param scriptXMLPath
 	 *            script.xml文件位置
+	 * @param watchPath
+	 *            被监测的脚本文件夹(.class)
 	 * @throws Exception
 	 */
-	public void load(String scriptXMLPath) throws Exception {
+	public void load(String scriptXMLPath, String watchPath) throws Exception {
 		ecute(scriptXMLPath);
+		ClassWatcherService.GetInstance(watchPath).StartServers();
 	}
 
 	private void ecute(String scriptXMLPath) throws Exception {

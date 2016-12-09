@@ -10,8 +10,9 @@ public class Test {
 
 	public Test() {
 		try {
-			ScriptManager.getInstance().load("E:\\mywork\\HotClassloader\\src\\script.xml");
-			ClassWatcherService.GetInstance("E:\\mywork\\HotClassloader\\script").StartServers();
+			ScriptManager.getInstance().load("E:\\mywork\\HotClassloader\\src\\script.xml",
+					"E:\\mywork\\HotClassloader\\script");
+
 			while (true) {
 				ISayScript s1 = ScriptManager.getInstance().getScript(1);
 				s1.say();/// !!!!!!!!!!!!!

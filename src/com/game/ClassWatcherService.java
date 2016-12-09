@@ -67,6 +67,7 @@ public class ClassWatcherService implements Runnable {
 					}
 				}
 				new Thread(this).start();
+				logger.debug("启动检测脚本业务-------");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -95,7 +96,7 @@ public class ClassWatcherService implements Runnable {
 					@SuppressWarnings("unchecked")
 					WatchEvent<Path> e = (WatchEvent<Path>) event;
 					Path fileName = e.context();
-					
+
 					String keypath = this.keys.get(key);
 					logger.error(event.kind().name() + "发现目录下有Class发生变化.进行热加载" + keypath + "\\" + fileName);
 
@@ -112,7 +113,7 @@ public class ClassWatcherService implements Runnable {
 					// MyClassLoader.GetInstance().findNewClass(path + "\\" +
 					// javaName + ".class");
 					// ----------------------编译-------------------------------
-					
+
 					Object obj = MyClassLoader.GetInstance().findNewClass(keypath + "\\" + fileName);
 					ScriptManager.getInstance().putScript((IScript) obj);
 				}
